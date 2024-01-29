@@ -29,19 +29,36 @@ const {createApp} = Vue
                     ]
             }
         },
-        methods: {
-            nextImage(){
-                this.currentImage = this.currentImage + 1
-                if(this.currentImage > this.slides.length - 1){
-                    this.currentImage = 0
-                }
-            },
-            prevImage(){
-                this.currentImage = this.currentImage - 1
-                if(this.currentImage < 0){
-                    this.currentImage = this.slides.length - 1
-                }
 
+        methods: {
+            prevImage(){
+              this.currentImage--
+        
+              if( this.currentImage < 0 ){
+                this.currentImage = this.movie.images.length - 1
+              }
+        
             },
-        }
-    }).mount("#app")
+            nextImage(){
+              this.currentImage++
+        
+              if( this.currentImage > this.movie.images.length - 1  ){
+                this.currentImage = 0
+              }
+        
+            },
+            activeInterval(){
+              this.autoScroll = setInterval( () =>{
+                this.nextImage()
+              }, 2000 )
+            },
+            stopInterval(){
+              clearInterval(this.autoScroll )
+            },
+            changeImage(index){
+              this.currentImage = index
+            }
+            
+          }
+        
+        }).mount("#app")
